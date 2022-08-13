@@ -1,0 +1,17 @@
+#todo el pedo que vas a ocupar para tu instalacion
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      # - yarn install
+  build:
+    commands:
+      # - yarn build
+      - aws s3 rm s3://$S3_BUCKET --recursive
+      - aws s3 cp ./public s3://$S3_BUCKET --recursive --content-encoding gzip
+artifacts:
+  files:
+    - '**/*'
+  discard-paths: no
+  base-directory: ./public
